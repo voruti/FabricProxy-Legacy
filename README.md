@@ -7,7 +7,7 @@ a BungeeCord, Waterfall or Velocity legacy mode server.
 
 ## Disclaimer
 
-I'm not 100% sure what I'm doing; I would appreciate pull requests.
+I'm not 100% sure what I'm doing, it just works; I would appreciate pull requests.
 
 [FabricProxy]: https://github.com/OKTW-Network/FabricProxy
 
