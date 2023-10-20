@@ -11,7 +11,7 @@ jobs:
     outputs:
       on_main: ${{ steps.contains_tag.outputs.retval }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - uses: rickstaa/action-contains-tag@v1.2.0
@@ -28,7 +28,7 @@ jobs:
 
       # --- from workflow.yml ---
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       
       - name: Validation
         uses: gradle/wrapper-validation-action@v1
