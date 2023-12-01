@@ -3,6 +3,7 @@ package one.oktw.mixin.bungee;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import net.minecraft.network.ClientConnection;
+import net.minecraft.network.packet.c2s.login.LoginHelloC2SPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerLoginNetworkHandler;
 import one.oktw.interfaces.BungeeClientConnection;
@@ -10,7 +11,9 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerLoginNetworkHandler.class)
 public abstract class ServerLoginNetworkHandlerMixin {
@@ -19,22 +22,22 @@ public abstract class ServerLoginNetworkHandlerMixin {
     @Final
     ClientConnection connection;
 
+    @Shadow
+    private GameProfile profile;
 
-    @Redirect(method = "onHello", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/server/MinecraftServer;getHostProfile()Lcom/mojang/authlib/GameProfile;"))
-    private GameProfile initUuid(MinecraftServer minecraftServer) {
-        final GameProfile originalGameProfile = minecraftServer.getHostProfile();
 
+    @Inject(method = "onHello", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/server/network/ServerLoginNetworkHandler;startVerify(Lcom/mojang/authlib/GameProfile;)V",
+            shift = At.Shift.BEFORE))
+    private void initUuid(LoginHelloC2SPacket packet, CallbackInfo ci) {
         // override game profile with saved information:
-        final GameProfile gameProfile = new GameProfile(((BungeeClientConnection) connection).getSpoofedUUID(), originalGameProfile.getName());
+        this.profile = new GameProfile(((BungeeClientConnection) connection).getSpoofedUUID(), this.profile.getName());
 
         if (((BungeeClientConnection) connection).getSpoofedProfile() != null) {
             for (Property property : ((BungeeClientConnection) connection).getSpoofedProfile()) {
-                gameProfile.getProperties().put(property.name(), property);
+                this.profile.getProperties().put(property.name(), property);
             }
         }
-
-        return gameProfile;
     }
 
     @Redirect(method = "onHello", at = @At(value = "INVOKE",
