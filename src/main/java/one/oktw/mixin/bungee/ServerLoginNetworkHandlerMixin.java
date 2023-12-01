@@ -20,7 +20,7 @@ public abstract class ServerLoginNetworkHandlerMixin {
 
     @Shadow
     @Final
-    public ClientConnection connection;
+    ClientConnection connection;
 
     @Shadow
     private GameProfile profile;
