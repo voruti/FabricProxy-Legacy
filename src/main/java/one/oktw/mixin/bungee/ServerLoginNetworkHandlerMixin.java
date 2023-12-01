@@ -19,9 +19,6 @@ public abstract class ServerLoginNetworkHandlerMixin {
     @Final
     ClientConnection connection;
 
-    @Shadow
-    private GameProfile profile;
-
 
     @Redirect(method = "onHello", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/server/MinecraftServer;getHostProfile()Lcom/mojang/authlib/GameProfile;"))
@@ -31,7 +28,7 @@ public abstract class ServerLoginNetworkHandlerMixin {
 
         if (((BungeeClientConnection) connection).getSpoofedProfile() != null) {
             for (Property property : ((BungeeClientConnection) connection).getSpoofedProfile()) {
-                this.profile.getProperties().put(property.name(), property);
+                gameProfile.getProperties().put(property.name(), property);
             }
         }
 
