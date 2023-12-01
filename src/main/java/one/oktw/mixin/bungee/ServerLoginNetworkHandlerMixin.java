@@ -26,18 +26,14 @@ public abstract class ServerLoginNetworkHandlerMixin {
     private GameProfile profile;
 
 
-    @Inject(method = "onHello", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/server/network/ServerLoginNetworkHandler;startVerify(Lcom/mojang/authlib/GameProfile;)V",
-            shift = At.Shift.BEFORE))
+    @Inject(method = "onHello", at = @At(value = "TAIL"))
     private void initUuid(LoginHelloC2SPacket packet, CallbackInfo ci) {
-        if (this.profile != null) {
-            // override game profile with saved information:
-            this.profile = new GameProfile(((BungeeClientConnection) connection).getSpoofedUUID(), this.profile.getName());
+        // override game profile with saved information:
+        this.profile = new GameProfile(((BungeeClientConnection) connection).getSpoofedUUID(), this.profile.getName());
 
-            if (((BungeeClientConnection) connection).getSpoofedProfile() != null) {
-                for (Property property : ((BungeeClientConnection) connection).getSpoofedProfile()) {
-                    this.profile.getProperties().put(property.name(), property);
-                }
+        if (((BungeeClientConnection) connection).getSpoofedProfile() != null) {
+            for (Property property : ((BungeeClientConnection) connection).getSpoofedProfile()) {
+                this.profile.getProperties().put(property.name(), property);
             }
         }
     }
