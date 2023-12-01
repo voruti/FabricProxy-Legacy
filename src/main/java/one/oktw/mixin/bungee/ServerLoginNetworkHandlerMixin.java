@@ -35,7 +35,7 @@ public abstract class ServerLoginNetworkHandlerMixin {
 
         if (((BungeeClientConnection) connection).getSpoofedProfile() != null) {
             for (Property property : ((BungeeClientConnection) connection).getSpoofedProfile()) {
-                this.profile.getProperties().put(property.getName(), property);
+                this.profile.getProperties().put(property.name(), property);
             }
         }
     }
