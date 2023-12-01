@@ -38,7 +38,7 @@ public class ServerHandshakeNetworkHandlerMixin {
             "Lnet/minecraft/server/network/ServerLoginNetworkHandler;<init>(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/network/ClientConnection;)V"))
     private void onProcessHandshakeStart(HandshakeC2SPacket packet, CallbackInfo ci) {
         if (NetworkState.LOGIN.equals(packet.getNewNetworkState())) {
-            String[] split = ((HandshakeC2SPacketAccessor) packet).getAddress().split("\00");
+            String[] split = packet.address().split("\00");
             if (split.length == 3 || split.length == 4) {
                 // override/insert forwarded IP into connection:
                 ((ClientConnectionAccessor) connection).setAddress(
