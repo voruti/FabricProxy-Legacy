@@ -2,7 +2,6 @@ package one.oktw.mixin.bungee;
 
 import com.google.gson.Gson;
 import com.mojang.authlib.properties.Property;
-import com.mojang.util.UUIDTypeAdapter;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.NetworkState;
 import net.minecraft.network.packet.c2s.handshake.HandshakeC2SPacket;
@@ -11,6 +10,7 @@ import net.minecraft.server.network.ServerHandshakeNetworkHandler;
 import net.minecraft.text.LiteralTextContent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import one.oktw.Util;
 import one.oktw.interfaces.BungeeClientConnection;
 import one.oktw.mixin.ClientConnectionAccessor;
 import org.spongepowered.asm.mixin.Final;
@@ -47,7 +47,7 @@ public class ServerHandshakeNetworkHandlerMixin {
 
 
                 // extract forwarded profile information and save them:
-                ((BungeeClientConnection) connection).setSpoofedUUID(UUIDTypeAdapter.fromString(split[2]));
+                ((BungeeClientConnection) connection).setSpoofedUUID(Util.fromString(split[2]));
 
                 if (split.length == 4) {
                     ((BungeeClientConnection) connection).setSpoofedProfile(gson.fromJson(split[3], Property[].class));
