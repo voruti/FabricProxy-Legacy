@@ -30,12 +30,14 @@ public abstract class ServerLoginNetworkHandlerMixin {
             target = "Lnet/minecraft/server/network/ServerLoginNetworkHandler;startVerify(Lcom/mojang/authlib/GameProfile;)V",
             shift = At.Shift.BEFORE))
     private void initUuid(LoginHelloC2SPacket packet, CallbackInfo ci) {
-        // override game profile with saved information:
-        this.profile = new GameProfile(((BungeeClientConnection) connection).getSpoofedUUID(), this.profile.getName());
+        if (this.profile != null) {
+            // override game profile with saved information:
+            this.profile = new GameProfile(((BungeeClientConnection) connection).getSpoofedUUID(), this.profile.getName());
 
-        if (((BungeeClientConnection) connection).getSpoofedProfile() != null) {
-            for (Property property : ((BungeeClientConnection) connection).getSpoofedProfile()) {
-                this.profile.getProperties().put(property.name(), property);
+            if (((BungeeClientConnection) connection).getSpoofedProfile() != null) {
+                for (Property property : ((BungeeClientConnection) connection).getSpoofedProfile()) {
+                    this.profile.getProperties().put(property.name(), property);
+                }
             }
         }
     }
