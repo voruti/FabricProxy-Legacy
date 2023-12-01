@@ -9,8 +9,7 @@
     "voruti"
   ],
   "contact": {
-    "homepage": "https://github.com/voruti/FabricProxy",
-    "sources": "https://github.com/voruti/FabricProxy"
+    "repo": "https://github.com/voruti/FabricProxy-Legacy"
   },
   "license": "MIT",
   "environment": "server",
@@ -20,7 +19,7 @@
     "bungee.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.14.9",
-    "minecraft": ">=1.19.2"
+    "fabricloader": ">=${loader_version}",
+    "minecraft": ">=${minecraft_version}"
   }
 }
