@@ -7,7 +7,6 @@ import net.minecraft.network.NetworkState;
 import net.minecraft.network.packet.c2s.handshake.HandshakeC2SPacket;
 import net.minecraft.network.packet.s2c.login.LoginDisconnectS2CPacket;
 import net.minecraft.server.network.ServerHandshakeNetworkHandler;
-import net.minecraft.text.LiteralTextContent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import one.oktw.Util;
@@ -54,9 +53,9 @@ public class ServerHandshakeNetworkHandlerMixin {
                 }
             } else {
                 // no extra information found in the address, disconnecting player:
-                Text disconnectMessage = MutableText.of(new LiteralTextContent(
+                Text disconnectMessage = Text.of(
                         "Bypassing proxy not allowed! If you wish to use IP forwarding, " +
-                                "please enable it in your BungeeCord config as well!"));
+                                "please enable it in your BungeeCord config as well!");
                 connection.send(new LoginDisconnectS2CPacket(disconnectMessage));
                 connection.disconnect(disconnectMessage);
             }
