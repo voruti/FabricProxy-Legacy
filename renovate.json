@@ -1,17 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "See all configuration options at https://docs.renovatebot.com/configuration-options/.",
   "extends": [
-    "config:recommended"
+    "config:best-practices",
+    ":pinVersions",
+    ":separateMultipleMajorReleases",
+    ":automergeMinor",
+    ":automergeDigest"
   ],
-  "packageRules": [
-    {
-      "matchUpdateTypes": [
-        "minor",
-        "patch",
-        "pin",
-        "digest"
-      ],
-      "automerge": true
-    }
-  ]
+  "osvVulnerabilityAlerts": true
 }
