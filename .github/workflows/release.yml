@@ -43,7 +43,7 @@ jobs:
           java-version: "17.0.20+101"
 
       - name: cache
-        uses: actions/cache@v4
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5
         with:
           path: |
             ~/.gradle
