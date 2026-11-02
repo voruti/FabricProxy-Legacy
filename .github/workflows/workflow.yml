@@ -6,21 +6,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
       - name: Validation
-        uses: gradle/wrapper-validation-action@v2
+        uses: gradle/wrapper-validation-action@b5418f5a58f5fd2eb486dd7efb368fe7be7eae45 # v2.1.3
 
       - name: JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4.9.1
         with:
           distribution: "temurin"
           java-version: "17.0.20+101"
 
       - name: cache
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: |
             ~/.gradle
@@ -33,7 +33,7 @@ jobs:
         run: ./gradlew build
 
       - name: Upload-Artifact
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@0c366cb4fc8897159c94880f94b55bc716ad6a66 # master
         with:
           name: Artifact
           path: build/libs
